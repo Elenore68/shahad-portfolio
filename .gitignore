@@ -17,3 +17,10 @@ Thumbs.db
 # temp scripts
 scripts/addProjectsToFirebase.js
 firebase/addFakeProjects.js
+
+# Firebase setup and rules (local only)
+FIREBASE_SECURITY_RULES.md
+FIREBASE_SETUP.md
+
+# Preview images
+/Preview
