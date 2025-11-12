@@ -44,22 +44,4 @@ This portfolio represents my personal brand — blending creativity, interactivi
 
 
 
----
 
-## ⚙️ Setup & Installation
-
-```bash
-# Clone the repository
-git clone https://github.com/<YOUR_USERNAME>/<YOUR_REPO_NAME>.git
-
-# Navigate into the folder
-cd <YOUR_REPO_NAME>
-
-# Install dependencies
-npm install
-
-# Run locally
-npm start
-
-# Build for production
-npm run build
