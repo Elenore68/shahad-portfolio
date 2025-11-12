@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Global layer */
+:root {
+  --bg-canvas: #EFEEF6;
+}
+
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  @apply bg-canvas text-slate-800 antialiased;
+}
+
+.container-soft {
+  @apply bg-soft-gradient;
+}
+
+
