@@ -1,21 +1,38 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import { FaChevronUp } from 'react-icons/fa'
 
 function ScrollToTop() {
   const [isVisible, setIsVisible] = useState(false)
+  const rafIdRef = useRef(null)
+  const lastScrollYRef = useRef(0)
+
+  const toggleVisibility = useCallback(() => {
+    const scrollY = window.pageYOffset || document.documentElement.scrollTop
+    
+    // Only update state if scroll position changed significantly
+    if (Math.abs(scrollY - lastScrollYRef.current) > 50) {
+      lastScrollYRef.current = scrollY
+      setIsVisible(scrollY > 300)
+    }
+  }, [])
 
   useEffect(() => {
-    const toggleVisibility = () => {
-      if (window.pageYOffset > 300) {
-        setIsVisible(true)
-      } else {
-        setIsVisible(false)
+    // Throttled scroll handler using requestAnimationFrame
+    const handleScroll = () => {
+      if (rafIdRef.current) {
+        cancelAnimationFrame(rafIdRef.current)
       }
+      rafIdRef.current = requestAnimationFrame(toggleVisibility)
     }
 
-    window.addEventListener('scroll', toggleVisibility)
-    return () => window.removeEventListener('scroll', toggleVisibility)
-  }, [])
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => {
+      if (rafIdRef.current) {
+        cancelAnimationFrame(rafIdRef.current)
+      }
+      window.removeEventListener('scroll', handleScroll)
+    }
+  }, [toggleVisibility])
 
   const scrollToTop = () => {
     window.scrollTo({

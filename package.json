@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "add-projects": "node scripts/addProjectsToFirebase.js"
+    "add-projects": "node scripts/addProjectsToFirebase.js",
+    "add-achievements": "node scripts/addAchievementsToFirebase.js"
   },
   "dependencies": {
     "firebase": "^10.14.1",

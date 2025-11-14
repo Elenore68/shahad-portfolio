@@ -38,7 +38,7 @@ function Skills() {
   ]
 
   return (
-    <section id="skills" className="relative w-full overflow-hidden py-12 md:py-16 bg-[#F4F3FA]">
+    <section id="skills" className="relative w-full py-12 md:py-16 bg-[#F4F3FA]">
       <div className="relative max-w-7xl mx-auto px-6 md:px-16 lg:px-24">
         {/* Section Title */}
         <div className="mb-8 md:mb-12">

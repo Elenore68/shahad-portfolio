@@ -65,7 +65,7 @@ const useImageLoader = (seqRef, onLoad, dependencies) => {
   }, dependencies);
 };
 
-const useAnimationLoop = (trackRef, targetVelocity, seqWidth, isHovered, pauseOnHover) => {
+const useAnimationLoop = (trackRef, targetVelocity, seqWidth, isHovered, pauseOnHover, isVisible = true) => {
   const rafRef = useRef(null);
   const lastTimestampRef = useRef(null);
   const offsetRef = useRef(0);
@@ -80,6 +80,7 @@ const useAnimationLoop = (trackRef, targetVelocity, seqWidth, isHovered, pauseOn
     if (seqWidth > 0) {
       offsetRef.current = ((offsetRef.current % seqWidth) + seqWidth) % seqWidth;
       track.style.transform = `translate3d(${-offsetRef.current}px, 0, 0)`;
+      track.style.willChange = 'transform';
     }
     if (prefersReduced) {
       track.style.transform = 'translate3d(0, 0, 0)';
@@ -93,7 +94,9 @@ const useAnimationLoop = (trackRef, targetVelocity, seqWidth, isHovered, pauseOn
       }
       const deltaTime = Math.max(0, timestamp - lastTimestampRef.current) / 1000;
       lastTimestampRef.current = timestamp;
-      const target = pauseOnHover && isHovered ? 0 : targetVelocity;
+      // Pause when not visible or when hovered (if pauseOnHover is enabled)
+      const shouldPause = !isVisible || (pauseOnHover && isHovered);
+      const target = shouldPause ? 0 : targetVelocity;
       const easingFactor = 1 - Math.exp(-deltaTime / ANIMATION_CONFIG.SMOOTH_TAU);
       velocityRef.current += (target - velocityRef.current) * easingFactor;
       if (seqWidth > 0) {
@@ -102,6 +105,7 @@ const useAnimationLoop = (trackRef, targetVelocity, seqWidth, isHovered, pauseOn
         offsetRef.current = nextOffset;
         const translateX = -offsetRef.current;
         track.style.transform = `translate3d(${translateX}px, 0, 0)`;
+        track.style.willChange = 'transform';
       }
       rafRef.current = requestAnimationFrame(animate);
     };
@@ -113,7 +117,7 @@ const useAnimationLoop = (trackRef, targetVelocity, seqWidth, isHovered, pauseOn
       }
       lastTimestampRef.current = null;
     };
-  }, [targetVelocity, seqWidth, isHovered, pauseOnHover, trackRef]);
+  }, [targetVelocity, seqWidth, isHovered, pauseOnHover, trackRef, isVisible]);
 };
 
 export const LogoLoop = memo(
@@ -138,6 +142,7 @@ export const LogoLoop = memo(
     const [seqWidth, setSeqWidth] = useState(0);
     const [copyCount, setCopyCount] = useState(ANIMATION_CONFIG.MIN_COPIES);
     const [isHovered, setIsHovered] = useState(false);
+    const [isVisible, setIsVisible] = useState(true);
 
     const targetVelocity = useMemo(() => {
       const magnitude = Math.abs(speed);
@@ -156,9 +161,26 @@ export const LogoLoop = memo(
       }
     }, []);
 
+    // Pause animation when off-screen using IntersectionObserver
+    useEffect(() => {
+      if (!containerRef.current) return;
+      
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            setIsVisible(entry.isIntersecting);
+          });
+        },
+        { threshold: 0.1 }
+      );
+      
+      observer.observe(containerRef.current);
+      return () => observer.disconnect();
+    }, []);
+
     useResizeObserver(updateDimensions, [containerRef, seqRef], [logos, gap, logoHeight]);
     useImageLoader(seqRef, updateDimensions, [logos, gap, logoHeight]);
-    useAnimationLoop(trackRef, targetVelocity, seqWidth, isHovered, pauseOnHover);
+    useAnimationLoop(trackRef, targetVelocity, seqWidth, isHovered, pauseOnHover, isVisible);
 
     const cssVariables = useMemo(
       () => ({

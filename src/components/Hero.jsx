@@ -20,10 +20,14 @@ function Hero() {
             Curious and detail‑oriented, I love organizing, creating, and exploring how things work.
           </p>
           <div className="mt-6 flex gap-3 flex-wrap justify-center md:justify-start">
-            <a href="#contact" className="inline-flex items-center justify-center gap-2 bg-[#443592] text-white px-5 md:px-6 py-2.5 rounded-lg text-[14px] md:text-[15px] font-medium shadow-soft">
-              <LuDownload />
-              Download CV
-            </a>
+          <a
+  href="public\Shahad Aljoahni-CV.pdf"
+  download="Shahad_AlJohani_CV.pdf"
+  className="inline-flex items-center justify-center gap-2 bg-[#443592] text-white px-5 md:px-6 py-2.5 rounded-lg text-[14px] md:text-[15px] font-medium shadow-soft"
+>
+  <LuDownload />
+  Download CV
+</a>
             <a href="#projects" className="inline-flex items-center justify-center border border-[#D99BA4] text-[#D99BA4] px-5 md:px-6 py-2.5 rounded-lg text-[14px] md:text-[15px] font-medium">
               Projects
             </a>

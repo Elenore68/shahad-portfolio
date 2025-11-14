@@ -65,7 +65,7 @@ function About() {
             }}
           >
             {/* Decorative gradient overlay */}
-            <div className="absolute top-0 left-0 w-64 h-64 bg-gradient-to-br from-blue-200/20 to-purple-200/20 rounded-full blur-3xl -translate-y-1/2 -translate-x-1/2 opacity-50 group-hover:opacity-70 transition-opacity duration-500" />
+            <div className="absolute top-0 left-0 w-64 h-64 bg-gradient-to-br from-blue-200/20 to-purple-200/20 rounded-full blur-3xl -translate-y-1/2 -translate-x-1/2 opacity-50 group-hover:opacity-70 transition-opacity duration-500 pointer-events-none" />
             
             <div className="h-full flex flex-col justify-center relative z-10 p-6 md:p-8">
               <div className="flex items-center gap-2 md:gap-3 text-[#443592] mb-4 md:mb-5 group-hover:gap-3 md:group-hover:gap-4 transition-all duration-300">
@@ -101,7 +101,7 @@ function About() {
             }}
           >
             {/* Decorative gradient overlay */}
-            <div className="absolute bottom-0 right-0 w-64 h-64 bg-gradient-to-tl from-pink-200/20 to-purple-200/20 rounded-full blur-3xl translate-y-1/2 translate-x-1/2 opacity-50 group-hover:opacity-70 transition-opacity duration-500" />
+            <div className="absolute bottom-0 right-0 w-64 h-64 bg-gradient-to-tl from-pink-200/20 to-purple-200/20 rounded-full blur-3xl translate-y-1/2 translate-x-1/2 opacity-50 group-hover:opacity-70 transition-opacity duration-500 pointer-events-none" />
             
             <div className="h-full flex flex-col justify-center relative z-10 p-6 md:p-8">
               <div className="flex items-center gap-2 md:gap-3 text-[#443592] mb-4 md:mb-5 group-hover:gap-3 md:group-hover:gap-4 transition-all duration-300">

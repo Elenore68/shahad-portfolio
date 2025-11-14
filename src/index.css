@@ -9,6 +9,8 @@
 
 html, body, #root {
   height: 100%;
+  /* Use CSS variable for mobile viewport height */
+  min-height: calc(var(--vh, 1vh) * 100);
 }
 
 body {

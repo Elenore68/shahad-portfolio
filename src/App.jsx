@@ -9,7 +9,10 @@ import ScrollToTop from './components/ScrollToTop.jsx'
 
 function App() {
   return (
-    <div className="min-h-screen bg-canvas">
+    <div 
+      className="bg-canvas"
+      style={{ minHeight: 'calc(var(--vh, 1vh) * 100)' }}
+    >
       <Header />
       <main>
         <Hero />

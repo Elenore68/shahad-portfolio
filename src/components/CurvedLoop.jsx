@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState, useMemo, useId } from 'react';
+import { useRef, useEffect, useState, useMemo, useId, memo } from 'react';
 
 const CurvedLoop = ({
   marqueeText = '',
@@ -57,11 +57,32 @@ const CurvedLoop = ({
     }
   }, [spacing]);
 
+  const containerRef = useRef(null);
+  const isVisibleRef = useRef(true);
+
+  // Pause animation when off-screen using IntersectionObserver
+  useEffect(() => {
+    if (!containerRef.current) return;
+    
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          isVisibleRef.current = entry.isIntersecting;
+        });
+      },
+      { threshold: 0.1 }
+    );
+    
+    observer.observe(containerRef.current);
+    return () => observer.disconnect();
+  }, []);
+
   useEffect(() => {
     if (!spacing || !ready) return;
     let frame = 0;
     const step = () => {
-      if (!dragRef.current && textPathRef.current) {
+      // Only animate when visible
+      if (isVisibleRef.current && !dragRef.current && textPathRef.current) {
         const delta = dirRef.current === 'right' ? speed : -speed;
         const currentOffset = parseFloat(textPathRef.current.getAttribute('startOffset') || '0');
         let newOffset = currentOffset + delta;
@@ -109,8 +130,14 @@ const CurvedLoop = ({
 
   return (
     <div
+      ref={containerRef}
       className="flex items-center justify-center w-full py-8 md:py-12"
-      style={{ visibility: ready ? 'visible' : 'hidden', cursor: cursorStyle }}
+      style={{ 
+        visibility: ready ? 'visible' : 'hidden', 
+        cursor: cursorStyle,
+        pointerEvents: interactive ? 'auto' : 'none',
+        willChange: 'transform'
+      }}
       onPointerDown={onPointerDown}
       onPointerMove={onPointerMove}
       onPointerUp={endDrag}
@@ -119,7 +146,11 @@ const CurvedLoop = ({
       <svg
         className="select-none w-full overflow-visible block aspect-[100/12] font-bold uppercase leading-none"
         viewBox="0 0 1440 120"
-        style={{ height: 'auto', maxHeight: '100px' }}
+        style={{ 
+          height: 'auto', 
+          maxHeight: '100px',
+          pointerEvents: 'none'
+        }}
       >
         <text 
           ref={measureRef} 
@@ -164,5 +195,5 @@ const CurvedLoop = ({
   );
 };
 
-export default CurvedLoop;
+export default memo(CurvedLoop);
 

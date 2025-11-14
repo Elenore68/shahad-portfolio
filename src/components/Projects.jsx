@@ -60,7 +60,7 @@ function Projects() {
   }
 
   return (
-    <section id="projects" className="relative w-full overflow-hidden pt-14 md:pt-20 pb-4 md:pb-6">
+    <section id="projects" className="relative w-full pt-14 md:pt-20 pb-4 md:pb-6">
       {/* Background */}
       <div
         className="absolute inset-0"

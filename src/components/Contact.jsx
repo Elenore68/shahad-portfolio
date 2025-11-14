@@ -1,8 +1,9 @@
-import { useState } from 'react'
+import { useState, memo } from 'react'
 import emailjs from '@emailjs/browser'
 import ScrollFloat from './bits/ScrollFloat.jsx'
 import { HiOutlineMail, HiOutlinePhone, HiOutlineLocationMarker } from 'react-icons/hi'
-import { FaLinkedin, FaGithub, FaTwitter } from 'react-icons/fa'
+import { FaLinkedin, FaGithub  } from 'react-icons/fa'
+import { FaXTwitter } from "react-icons/fa6";
 import { MdArrowOutward } from 'react-icons/md'
 
 function Contact() {
@@ -103,7 +104,14 @@ function Contact() {
   }
 
   return (
-    <section id="contact" className="relative w-full overflow-hidden py-20 md:py-28 bg-[#F4F3FA]">
+    <section 
+      id="contact" 
+      className="relative w-full py-20 md:py-28 bg-[#F4F3FA]"
+      style={{
+        willChange: 'scroll-position',
+        transform: 'translateZ(0)'
+      }}
+    >
       <div className="relative max-w-7xl mx-auto px-6 md:px-16 lg:px-24">
         {/* Section Header */}
         <div className="mb-12 md:mb-16">
@@ -171,7 +179,7 @@ function Contact() {
               <p className="font-semibold text-gray-900 mb-4">Connect with me</p>
               <div className="flex gap-4">
                 <a
-                  href="https://linkedin.com"
+                  href="www.linkedin.com/in/shahad02aljohani"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-12 h-12 rounded-full bg-white flex items-center justify-center text-[#443592] hover:bg-[#443592] hover:text-white transition-all duration-300 shadow-md"
@@ -179,7 +187,7 @@ function Contact() {
                   <FaLinkedin className="w-5 h-5" />
                 </a>
                 <a
-                  href="https://github.com"
+                  href="https://github.com/Elenore68"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-12 h-12 rounded-full bg-white flex items-center justify-center text-[#443592] hover:bg-[#443592] hover:text-white transition-all duration-300 shadow-md"
@@ -187,19 +195,25 @@ function Contact() {
                   <FaGithub className="w-5 h-5" />
                 </a>
                 <a
-                  href="https://twitter.com"
+                  href="https://x.com/_hollygrove5"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-12 h-12 rounded-full bg-white flex items-center justify-center text-[#443592] hover:bg-[#443592] hover:text-white transition-all duration-300 shadow-md"
                 >
-                  <FaTwitter className="w-5 h-5" />
+                  <FaXTwitter  className="w-5 h-5" />
                 </a>
               </div>
             </div>
           </div>
 
           {/* Right Column - Contact Form */}
-          <div className="bg-white rounded-2xl p-8 shadow-lg">
+          <div 
+            className="bg-white rounded-2xl p-8 shadow-lg"
+            style={{
+              willChange: 'transform',
+              transform: 'translateZ(0)'
+            }}
+          >
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
                 <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
@@ -307,5 +321,5 @@ function Contact() {
   )
 }
 
-export default Contact
+export default memo(Contact)
 

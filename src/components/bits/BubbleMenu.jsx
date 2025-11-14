@@ -264,7 +264,7 @@ justify-content: flex-start;
         </button>
       </nav>
 
-      {showOverlay && (
+      {showOverlay && isMenuOpen && (
         <div
           ref={overlayRef}
           className={[
